@@ -1,0 +1,1211 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CloudStay - Cloud Based Hotel Booking System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        /* NAVBAR */
+        header {
+            background: linear-gradient(135deg, #173b72, #2878c8);
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ffd166;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 500px;
+            background:
+                linear-gradient(rgba(10, 40, 80, 0.65), rgba(10, 40, 80, 0.65)),
+                url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .hero-content {
+            color: white;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .hero button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            background: #ffb703;
+            color: #222;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .hero button:hover {
+            background: #ffd166;
+        }
+
+        /* SEARCH */
+        .search-section {
+            width: 90%;
+            max-width: 1100px;
+            margin: -55px auto 40px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .search-section h2 {
+            color: #173b72;
+            margin-bottom: 20px;
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .search-btn {
+            background: #2878c8;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 25px;
+        }
+
+        .search-btn:hover {
+            background: #173b72;
+        }
+
+        /* SECTION */
+        section {
+            padding: 55px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #173b72;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        /* HOTELS */
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .hotel-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .hotel-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .hotel-info {
+            padding: 20px;
+        }
+
+        .hotel-info h3 {
+            color: #173b72;
+            margin-bottom: 8px;
+        }
+
+        .location {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .rating {
+            color: #f5a400;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 21px;
+            font-weight: bold;
+            color: #2878c8;
+            margin-bottom: 15px;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 7px;
+            background: #2878c8;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .book-btn:hover {
+            background: #173b72;
+        }
+
+        /* FEATURES */
+        .features {
+            background: white;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature {
+            padding: 25px;
+            background: #f4f7fb;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            color: #173b72;
+            margin-bottom: 10px;
+        }
+
+        /* BOOKING FORM */
+        .booking-container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        .booking-container h2 {
+            color: #173b72;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .full {
+            grid-column: 1 / 3;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 14px;
+            background: #18a558;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .confirm-btn:hover {
+            background: #128344;
+        }
+
+        /* BOOKING RESULT */
+        #bookingResult {
+            display: none;
+            max-width: 750px;
+            margin: 30px auto;
+            background: #e9fff2;
+            border: 2px solid #18a558;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        #bookingResult h2 {
+            color: #128344;
+            margin-bottom: 15px;
+        }
+
+        .ticket {
+            line-height: 1.9;
+        }
+
+        /* CLOUD STATUS */
+        .cloud-status {
+            background: #173b72;
+            color: white;
+            padding: 35px;
+            text-align: center;
+        }
+
+        .cloud-status h2 {
+            margin-bottom: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            background: #18a558;
+            padding: 8px 18px;
+            border-radius: 20px;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #102b52;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hotel-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .hotel-grid,
+            .feature-grid,
+            .search-grid,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <div class="logo">☁️ CloudStay</div>
+
+        <nav>
+            <a onclick="goHome()">Home</a>
+            <a onclick="goHotels()">Hotels</a>
+            <a onclick="goBooking()">Booking</a>
+            <a onclick="goFeatures()">Features</a>
+        </nav>
+    </header>
+
+
+    <!-- HERO -->
+    <div class="hero" id="home">
+        <div class="hero-content">
+            <h1>Cloud-Based Hotel Booking</h1>
+
+            <p>
+                Search, select and book your favorite hotel
+                quickly and easily.
+            </p>
+
+            <button onclick="goHotels()">
+                Explore Hotels
+            </button>
+        </div>
+    </div>
+
+
+    <!-- SEARCH -->
+    <div class="search-section">
+
+        <h2>🔎 Find Your Perfect Stay</h2>
+
+        <div class="search-grid">
+
+            <div class="input-group">
+                <label>Location</label>
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="Enter city"
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Check-in</label>
+                <input
+                    type="date"
+                    id="checkin"
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Check-out</label>
+                <input
+                    type="date"
+                    id="checkout"
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Guests</label>
+                <select id="guests">
+                    <option value="1">1 Guest</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                    <option value="5">5 Guests</option>
+                    <option value="6">6 Guests</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button
+            class="search-btn"
+            onclick="searchHotels()"
+            style="width:100%; padding:13px;"
+        >
+            Search Hotels
+        </button>
+
+    </div>
+
+
+    <!-- HOTELS -->
+    <section id="hotels">
+
+        <h2 class="section-title">
+            🏨 Available Hotels
+        </h2>
+
+        <div class="hotel-grid">
+
+            <!-- HOTEL 1 -->
+            <div class="hotel-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80"
+                    alt="Grand Palace Hotel"
+                >
+
+                <div class="hotel-info">
+
+                    <h3>Grand Palace Hotel</h3>
+
+                    <p class="location">
+                        📍 Chennai, Tamil Nadu
+                    </p>
+
+                    <p class="rating">
+                        ★★★★★ 4.8
+                    </p>
+
+                    <p class="price">
+                        ₹4,500 / night
+                    </p>
+
+                    <button
+                        class="book-btn"
+                        onclick="selectHotel('Grand Palace Hotel', 4500)"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOTEL 2 -->
+            <div class="hotel-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80"
+                    alt="Royal Residency"
+                >
+
+                <div class="hotel-info">
+
+                    <h3>Royal Residency</h3>
+
+                    <p class="location">
+                        📍 Bangalore, Karnataka
+                    </p>
+
+                    <p class="rating">
+                        ★★★★☆ 4.5
+                    </p>
+
+                    <p class="price">
+                        ₹3,200 / night
+                    </p>
+
+                    <button
+                        class="book-btn"
+                        onclick="selectHotel('Royal Residency', 3200)"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOTEL 3 -->
+            <div class="hotel-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80"
+                    alt="Ocean View Resort"
+                >
+
+                <div class="hotel-info">
+
+                    <h3>Ocean View Resort</h3>
+
+                    <p class="location">
+                        📍 Goa, India
+                    </p>
+
+                    <p class="rating">
+                        ★★★★★ 4.9
+                    </p>
+
+                    <p class="price">
+                        ₹6,500 / night
+                    </p>
+
+                    <button
+                        class="book-btn"
+                        onclick="selectHotel('Ocean View Resort', 6500)"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOTEL 4 -->
+            <div class="hotel-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80"
+                    alt="City Comfort Hotel"
+                >
+
+                <div class="hotel-info">
+
+                    <h3>City Comfort Hotel</h3>
+
+                    <p class="location">
+                        📍 Hyderabad, Telangana
+                    </p>
+
+                    <p class="rating">
+                        ★★★★☆ 4.4
+                    </p>
+
+                    <p class="price">
+                        ₹2,800 / night
+                    </p>
+
+                    <button
+                        class="book-btn"
+                        onclick="selectHotel('City Comfort Hotel', 2800)"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOTEL 5 -->
+            <div class="hotel-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80"
+                    alt="Luxury Heights"
+                >
+
+                <div class="hotel-info">
+
+                    <h3>Luxury Heights</h3>
+
+                    <p class="location">
+                        📍 Mumbai, Maharashtra
+                    </p>
+
+                    <p class="rating">
+                        ★★★★★ 4.7
+                    </p>
+
+                    <p class="price">
+                        ₹7,200 / night
+                    </p>
+
+                    <button
+                        class="book-btn"
+                        onclick="selectHotel('Luxury Heights', 7200)"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOTEL 6 -->
+            <div class="hotel-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80"
+                    alt="Green Valley Hotel"
+                >
+
+                <div class="hotel-info">
+
+                    <h3>Green Valley Hotel</h3>
+
+                    <p class="location">
+                        📍 Ooty, Tamil Nadu
+                    </p>
+
+                    <p class="rating">
+                        ★★★★☆ 4.6
+                    </p>
+
+                    <p class="price">
+                        ₹3,800 / night
+                    </p>
+
+                    <button
+                        class="book-btn"
+                        onclick="selectHotel('Green Valley Hotel', 3800)"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+
+        <h2 class="section-title">
+            ☁️ CloudStay Features
+        </h2>
+
+        <div class="feature-grid">
+
+            <div class="feature">
+                <div class="feature-icon">🔍</div>
+                <h3>Easy Search</h3>
+                <p>
+                    Quickly find hotels based on location
+                    and stay dates.
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">☁️</div>
+                <h3>Cloud Storage</h3>
+                <p>
+                    Booking information can be stored
+                    securely in cloud databases.
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure Booking</h3>
+                <p>
+                    Designed with a simple and secure
+                    booking workflow.
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <h3>Responsive</h3>
+                <p>
+                    Works on computers, tablets and
+                    mobile devices.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- BOOKING -->
+    <section id="booking">
+
+        <div class="booking-container">
+
+            <h2>📝 Complete Your Booking</h2>
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Full Name</label>
+                    <input
+                        type="text"
+                        id="customerName"
+                        placeholder="Enter your name"
+                    >
+                </div>
+
+                <div>
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        id="customerEmail"
+                        placeholder="Enter email"
+                    >
+                </div>
+
+                <div>
+                    <label>Phone Number</label>
+                    <input
+                        type="tel"
+                        id="customerPhone"
+                        placeholder="Enter phone number"
+                    >
+                </div>
+
+                <div>
+                    <label>Number of Guests</label>
+                    <select id="bookingGuests">
+                        <option value="1">1 Guest</option>
+                        <option value="2">2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5">5 Guests</option>
+                        <option value="6">6 Guests</option>
+                    </select>
+                </div>
+
+                <div class="full">
+                    <label>Selected Hotel</label>
+                    <input
+                        type="text"
+                        id="selectedHotel"
+                        readonly
+                        placeholder="Select a hotel above"
+                    >
+                </div>
+
+                <div>
+                    <label>Check-in Date</label>
+                    <input
+                        type="date"
+                        id="bookingCheckin"
+                    >
+                </div>
+
+                <div>
+                    <label>Check-out Date</label>
+                    <input
+                        type="date"
+                        id="bookingCheckout"
+                    >
+                </div>
+
+                <div class="full">
+                    <label>Room Type</label>
+                    <select id="roomType">
+                        <option value="Standard Room">
+                            Standard Room
+                        </option>
+
+                        <option value="Deluxe Room">
+                            Deluxe Room
+                        </option>
+
+                        <option value="Suite Room">
+                            Suite Room
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button
+                class="confirm-btn"
+                onclick="confirmBooking()"
+            >
+                Confirm Booking
+            </button>
+
+        </div>
+
+
+        <!-- BOOKING RESULT -->
+        <div id="bookingResult">
+
+            <h2>✅ Booking Confirmed!</h2>
+
+            <div class="ticket">
+
+                <p>
+                    <strong>Booking ID:</strong>
+                    <span id="bookingId"></span>
+                </p>
+
+                <p>
+                    <strong>Name:</strong>
+                    <span id="resultName"></span>
+                </p>
+
+                <p>
+                    <strong>Hotel:</strong>
+                    <span id="resultHotel"></span>
+                </p>
+
+                <p>
+                    <strong>Room:</strong>
+                    <span id="resultRoom"></span>
+                </p>
+
+                <p>
+                    <strong>Guests:</strong>
+                    <span id="resultGuests"></span>
+                </p>
+
+                <p>
+                    <strong>Check-in:</strong>
+                    <span id="resultCheckin"></span>
+                </p>
+
+                <p>
+                    <strong>Check-out:</strong>
+                    <span id="resultCheckout"></span>
+                </p>
+
+                <p>
+                    <strong>Total Amount:</strong>
+                    ₹<span id="resultAmount"></span>
+                </p>
+
+                <br>
+
+                <p>
+                    Your booking has been successfully
+                    registered in the CloudStay system.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CLOUD STATUS -->
+    <div class="cloud-status">
+
+        <h2>☁️ Cloud System Status</h2>
+
+        <p>
+            Hotel booking service is online and available.
+        </p>
+
+        <div class="status">
+            ● CLOUD ONLINE
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            © 2026 CloudStay - Cloud Based Hotel Booking System
+        </p>
+
+        <p>
+            Mini Project | Cloud Computing
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        let selectedHotelName = "";
+        let selectedHotelPrice = 0;
+
+
+        // SET MINIMUM DATE
+        const today = new Date().toISOString().split("T")[0];
+
+        document.getElementById("checkin").min = today;
+        document.getElementById("checkout").min = today;
+
+        document.getElementById("bookingCheckin").min = today;
+        document.getElementById("bookingCheckout").min = today;
+
+
+        // NAVIGATION
+        function goHome() {
+            document.getElementById("home")
+                .scrollIntoView({ behavior: "smooth" });
+        }
+
+        function goHotels() {
+            document.getElementById("hotels")
+                .scrollIntoView({ behavior: "smooth" });
+        }
+
+        function goBooking() {
+            document.getElementById("booking")
+                .scrollIntoView({ behavior: "smooth" });
+        }
+
+        function goFeatures() {
+            document.getElementById("features")
+                .scrollIntoView({ behavior: "smooth" });
+        }
+
+
+        // SEARCH HOTELS
+        function searchHotels() {
+
+            const location =
+                document.getElementById("location").value;
+
+            const checkin =
+                document.getElementById("checkin").value;
+
+            const checkout =
+                document.getElementById("checkout").value;
+
+            if (location === "") {
+                alert("Please enter a location.");
+                return;
+            }
+
+            if (checkin === "" || checkout === "") {
+                alert("Please select check-in and check-out dates.");
+                return;
+            }
+
+            if (new Date(checkout) <= new Date(checkin)) {
+                alert("Check-out date must be after check-in date.");
+                return;
+            }
+
+            alert(
+                "Hotels found in " +
+                location +
+                " for your selected dates!"
+            );
+
+            goHotels();
+        }
+
+
+        // SELECT HOTEL
+        function selectHotel(name, price) {
+
+            selectedHotelName = name;
+            selectedHotelPrice = price;
+
+            document.getElementById("selectedHotel").value =
+                name;
+
+            const searchCheckin =
+                document.getElementById("checkin").value;
+
+            const searchCheckout =
+                document.getElementById("checkout").value;
+
+            if (searchCheckin !== "") {
+                document.getElementById("bookingCheckin").value =
+                    searchCheckin;
+            }
+
+            if (searchCheckout !== "") {
+                document.getElementById("bookingCheckout").value =
+                    searchCheckout;
+            }
+
+            goBooking();
+        }
+
+
+        // CONFIRM BOOKING
+        function confirmBooking() {
+
+            const name =
+                document.getElementById("customerName").value.trim();
+
+            const email =
+                document.getElementById("customerEmail").value.trim();
+
+            const phone =
+                document.getElementById("customerPhone").value.trim();
+
+            const guests =
+                document.getElementById("bookingGuests").value;
+
+            const hotel =
+                document.getElementById("selectedHotel").value;
+
+            const checkin =
+                document.getElementById("bookingCheckin").value;
+
+            const checkout =
+                document.getElementById("bookingCheckout").value;
+
+            const room =
+                document.getElementById("roomType").value;
+
+
+            if (name === "" ||
+                email === "" ||
+                phone === "" ||
+                hotel === "" ||
+                checkin === "" ||
+                checkout === "") {
+
+                alert(
+                    "Please fill all required booking details."
+                );
+
+                return;
+            }
+
+
+            if (new Date(checkout) <= new Date(checkin)) {
+
+                alert(
+                    "Check-out date must be after check-in date."
+                );
+
+                return;
+            }
+
+
+            // CALCULATE NUMBER OF NIGHTS
+            const startDate =
+                new Date(checkin);
+
+            const endDate =
+                new Date(checkout);
+
+            const difference =
+                endDate - startDate;
+
+            const nights =
+                Math.ceil(
+                    difference / (1000 * 60 * 60 * 24)
+                );
+
+
+            // ROOM PRICE
+            let roomMultiplier = 1;
+
+            if (room === "Deluxe Room") {
+                roomMultiplier = 1.3;
+            }
+
+            if (room === "Suite Room") {
+                roomMultiplier = 1.7;
+            }
+
+
+            const total =
+                selectedHotelPrice *
+                nights *
+                roomMultiplier;
+
+
+            // BOOKING ID
+            const randomNumber =
+                Math.floor(
+                    100000 + Math.random() * 900000
+                );
+
+            const bookingId =
+                "CS-" + randomNumber;
+
+
+            // DISPLAY RESULT
+            document.getElementById("bookingId")
+                .textContent = bookingId;
+
+            document.getElementById("resultName")
+                .textContent = name;
+
+            document.getElementById("resultHotel")
+                .textContent = hotel;
+
+            document.getElementById("resultRoom")
+                .textContent = room;
+
+            document.getElementById("resultGuests")
+                .textContent = guests;
+
+            document.getElementById("resultCheckin")
+                .textContent = checkin;
+
+            document.getElementById("resultCheckout")
+                .textContent = checkout;
+
+            document.getElementById("resultAmount")
+                .textContent =
+                Math.round(total).toLocaleString("en-IN");
+
+
+            document.getElementById("bookingResult")
+                .style.display = "block";
+
+
+            document.getElementById("bookingResult")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+
+
+            alert(
+                "Booking successful!\nYour Booking ID is " +
+                bookingId
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>
+```
